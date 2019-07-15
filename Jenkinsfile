@@ -36,5 +36,17 @@ pipeline {
                 }
             }      
             }
+        stage('DeployToProduction') {
+            when {
+                branch 'master'
+            }
+            steps {
+                milestone(1)
+                withCredentials([usernamePassword(credentialsId: 'webserver_login', usernamevariable: 'USERNAME', passwordVariable: 'USERPASS')])
+                script {
+                     sh "sshpass -p '$USERPASS' -v ssh -o StrictHostkeyChecking=no $USERNAME@$prod_ip \"docker pull srununna/train-schedule:
+            }
+        
+        }
     } 
 }
